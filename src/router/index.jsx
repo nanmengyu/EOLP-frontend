@@ -3,7 +3,7 @@ import Home from "../pages/home";
 import Layout from "../pages/layout";
 import Detail from "../pages/detail";
 import Profile from "../pages/profile";
-
+import Courses from "../pages/courses";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
         path: "profile/",
         element: <Profile />,
       },
+      {
+        path:"courses/",
+        element: <Courses/>
+      }
     ],
   },
 ]);

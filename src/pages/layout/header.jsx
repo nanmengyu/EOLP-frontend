@@ -18,7 +18,7 @@ const Header = () => {
     if (!value) {
       return;
     }
-    if (location.pathname != "/") {
+    if (location.pathname != "/" && location.pathname != "/courses") {
       message.warning("当前页面无法搜索");
       return;
     }
@@ -39,9 +39,13 @@ const Header = () => {
       <div className="header-left">
         <Link to="/"style={{ color: 'white' ,paddingLeft: "30px" }}>VOLTX
         <ul style={{ display: 'inline-flex', gap: '100px',marginLeft: "100px" ,listStyleType: 'none'}}>
-          <li>首页</li>
+          <li>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>首页</Link>
+          </li>
           <li>知识库</li>
-          <li>在线课程</li>
+          <li>
+            <Link to="/courses" style={{ textDecoration: 'none', color: 'inherit' }}>在线课程</Link>
+          </li>
           <li>学习成就</li>
           <li>用户中心</li>
         </ul>

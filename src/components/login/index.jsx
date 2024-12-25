@@ -2,17 +2,23 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import "./index.css";
 
 import { Button, Modal, Form, Input, Tooltip } from "antd";
+import React, { useState } from "react";
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ isRegister, login }) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
     console.log("Success:", values);
     login(values);
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <Form
+      form={form}
       name="basic"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -23,11 +29,11 @@ const LoginForm = ({ login }) => {
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: "请输入用户名！",
           },
         ]}
       >
-        <Input placeholder="username" />
+        <Input placeholder="用户名" />
       </Form.Item>
 
       <Form.Item
@@ -35,16 +41,39 @@ const LoginForm = ({ login }) => {
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: "请输入密码！",
           },
         ]}
       >
-        <Input type="password" placeholder="password" />
+        <Input type="password" placeholder="密码" />
       </Form.Item>
+
+      {isRegister && (
+        <Form.Item
+          name="confirmPassword"
+          dependencies={["password"]}
+          rules={[
+            {
+              required: true,
+              message: "请确认密码！",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("两次输入的密码不一致！"));
+              },
+            }),
+          ]}
+        >
+          <Input type="password" placeholder="确认密码" />
+        </Form.Item>
+      )}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-          请登录
+          {isRegister ? "注册" : "登录"}
         </Button>
       </Form.Item>
     </Form>
@@ -52,14 +81,17 @@ const LoginForm = ({ login }) => {
 };
 
 const LoginModal = ({ open, close, login }) => {
+  const [isRegister, setIsRegister] = useState(false);
+
   const ModalTitle = (
     <div>
-      <span>用户登录</span>
-      <Tooltip title="未注册用户，将自动注册并登录">
+      <span>{isRegister ? "用户注册" : "用户登录"}</span>
+      <Tooltip title={isRegister ? "填写信息完成注册" : "填写信息完成登录"}>
         <InfoCircleOutlined style={{ marginLeft: "5px" }} />
       </Tooltip>
     </div>
   );
+
   return (
     <Modal
       width={384}
@@ -70,9 +102,13 @@ const LoginModal = ({ open, close, login }) => {
       title={ModalTitle}
     >
       <div className="login-form">
-        <LoginForm login={login} />
+        <LoginForm isRegister={isRegister} login={login} />
       </div>
+      <Button type="link" onClick={() => setIsRegister(!isRegister)}>
+        {isRegister ? "已有账号？去登录" : "没有账号？去注册"}
+      </Button>
     </Modal>
   );
 };
+
 export default LoginModal;
