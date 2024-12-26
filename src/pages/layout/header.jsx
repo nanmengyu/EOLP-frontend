@@ -8,7 +8,7 @@ import { getImageUrl } from "../../tools";
 const { Search } = Input;
 
 const Header = () => {
-  const { auth, loginAct, logoutAct, getCoursesAct } = useTokenStore();
+  const { auth, loginAct, logoutAct, getCoursesAct,registerAct} = useTokenStore();
 
   const location = useLocation();
 
@@ -34,6 +34,22 @@ const Header = () => {
     }
   };
 
+  const handleRegister = async (values) =>{
+    if (values.password !== values.confirmPassword){
+      message.error("两次输入的密码不一致！");
+      return ;
+    }
+    const result = await registerAct({
+      username:values.username,
+      password:values.password,
+    });
+    if(result){
+      message.success("注册成功！请登录");
+      setShowLogin(false);
+    }else{
+      message.error("注册失败，请重试！");
+    }
+  };
   return (
     <div className="layout-header">
       <div className="header-left">
@@ -70,6 +86,7 @@ const Header = () => {
         open={showLogin}
         close={() => setShowLogin(false)}
         login={handleLogin}
+        register={handleRegister}
       />
     </div>
   );

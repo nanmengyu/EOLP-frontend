@@ -26,6 +26,15 @@ export function userLogin(paylaod) {
   });
 }
 
+// 用户注册
+export function userRegister(paylaod){
+  return api({
+    method:"post",
+    data:paylaod,
+    url:"/user/register",
+  });
+}
+
 // 用户登出
 export function userLogout() {
   return api({

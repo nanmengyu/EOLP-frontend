@@ -4,12 +4,16 @@ import "./index.css";
 import { Button, Modal, Form, Input, Tooltip } from "antd";
 import React, { useState } from "react";
 
-const LoginForm = ({ isRegister, login }) => {
+const LoginForm = ({ isRegister, handleLogin, handleRegister }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    login(values);
+    if (isRegister) {
+      handleRegister(values); // 调用注册函数
+    } else {
+      handleLogin(values); // 调用登录函数
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -80,7 +84,7 @@ const LoginForm = ({ isRegister, login }) => {
   );
 };
 
-const LoginModal = ({ open, close, login }) => {
+const LoginModal = ({ open, close, login, register }) => {
   const [isRegister, setIsRegister] = useState(false);
 
   const ModalTitle = (
@@ -102,7 +106,11 @@ const LoginModal = ({ open, close, login }) => {
       title={ModalTitle}
     >
       <div className="login-form">
-        <LoginForm isRegister={isRegister} login={login} />
+        <LoginForm
+          isRegister={isRegister}
+          handleLogin={login} // 登录函数
+          handleRegister={register} // 注册函数
+        />
       </div>
       <Button type="link" onClick={() => setIsRegister(!isRegister)}>
         {isRegister ? "已有账号？去登录" : "没有账号？去注册"}
