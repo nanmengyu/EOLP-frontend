@@ -43,6 +43,7 @@ const Header = () => {
       username:values.username,
       password:values.password,
     });
+    console.log(result);
     if(result){
       message.success("注册成功！请登录");
       setShowLogin(false);

@@ -34,8 +34,8 @@ export const useTokenStore = create(
           message.error("注册出现故障");
           return false;
         }
-        if (res.data?.msg === "注册成功"){
-          message.success("注册成功！请登录");
+        console.log(res.data?.msg);
+        if (res.data?.msg === "ok"){
           return true;
         }else{
           message.error(res.data?.msg);
