@@ -12,6 +12,9 @@ const Home = () => {
   const navigate = useNavigate();
   const { courses, getCoursesAct } = useTokenStore();
 
+
+
+  
   useEffect(() => {
     async function getData() {
       const res = await getBanners();
