@@ -28,6 +28,11 @@ const Home = () => {
       navigate("/course/" + item.to_id);
     }
   };
+
+
+
+
+  
   return (
     <div>
       {/* 轮播图 */}
