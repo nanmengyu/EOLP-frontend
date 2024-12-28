@@ -37,6 +37,8 @@ const Home = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '20px 10px' }}>
         {/* 调整轮播图宽度和左侧间距 */}
         <div style={{ width: "55%", marginLeft: '0' }}>
+
+          
           <Carousel autoplay>
             {banners.map((item) => (
               <img
