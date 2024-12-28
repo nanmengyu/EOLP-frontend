@@ -17,10 +17,14 @@ const Header = () => {
   const onSearch = (value) => {
     if (!value) {
       return;
+
+      
     }
     if (location.pathname != "/") {
       message.warning("当前页面无法搜索");
       return;
+
+      
     }
 
     getCoursesAct(value);
